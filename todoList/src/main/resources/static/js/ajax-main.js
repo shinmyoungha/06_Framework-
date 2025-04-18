@@ -192,7 +192,7 @@ const selectTodoList = () => {
         // tr 태그 생성
         const tr = document.createElement("tr"); // <tr></tr>
 
-        // JS 객체에 존재하는 key 모음 배열 생성
+        // JS 객체에 존재하는 key 모음 배열 생성dkdkdk
         const arr = ['todoNo', 'todoTitle', 'complete', 'regDate'];
 
         for(let key of arr) {
