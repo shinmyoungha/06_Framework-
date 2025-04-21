@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -119,5 +120,12 @@ public class AjaxController {
 		return service.todoDetail(todoNo);
 		// return 자료형 : Todo(DTO)
 		// -> HttpMessageConvertor 가 String(JSON) 형태로 변환해서 반환
+	}
+	
+	// 할 일 삭제 요청(DELETE)
+	@ResponseBody
+	@DeleteMapping("delete")
+	public int todoDelete(@RequestBody int todoNo) {
+		return service.todoDelete(todoNo);
 	}
 }
