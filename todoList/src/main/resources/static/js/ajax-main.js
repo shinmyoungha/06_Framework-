@@ -234,8 +234,76 @@ const selectTodo = (url) => {
   // 매개변수 url == "/ajax/detail?todoNo=1"  형태의 문자열
 
   // fetch요청 시 url 이용
-  
+  fetch(url)
+  .then(resp => resp.json())
+  .then(todo => {
+    console.log(todo);
+    
+    // popup layer 에 조회된 값을 출력
+    popupTodoNo.innerText       = todo.todoNo;
+    popupTodoTitle.innerText    = todo.todoTitle;
+    popupComplete.innerText     = todo.complete;
+    popupRegDate.innerText      = todo.regDate;
+    popupTodoContent.innerText  = todo.todoContent;
+
+    // popup layer 보이게 하기
+    popupLayer.classList.remove("popup-hidden");
+
+    // update layer 가 열려있다면 숨기기
+    updateLayer.classList.add("popup-hidden");
+  }); 
 }
+
+// popupLayer의 X버튼 클릭 시 닫기
+popupClose.addEventListener("click", () => {
+  // 숨겨주는 class 추가
+  popupLayer.classList.add("popup-hidden");
+})
+
+// 삭제 버튼 클릭 시
+deleteBtn.addEventListener("click", () => {
+
+    // 취소 클릭 시 아무것도 안 함(해당 함수 종료)
+    if( !confirm("정말 삭제하시겠습니까?") ) {
+      return;
+    }    
+
+    // 삭제할 할 일 번호 얻어오기
+    const todoNo = popupTodoNo.innerText;
+
+    // 삭제 비동기 요청 (DELETE)
+    fetch("/ajax/delete", {
+      method : "DELETE", // delete 방식 요청 -> @DeleteMapping 처리
+      headers : {"Content-Type" : "application/json"},
+      body : todoNo // todoNo 단일 값 하나는 JSON 형태로 자동 변환되어 전달됨
+      // body : JSON.stringify(todoNo)
+      // -> 원래는 이렇게 명시하는게 옳음(엄격한 환경에서는 꼭 명시)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+
+      console.log(result);
+
+      if(result > 0) { // 삭제 성공
+        alert("삭제되었습니다!")
+
+        // 상세 정보 팝업 레이어 닫기
+        popupLayer.classList.add("popup-hidden");
+
+        // 전체, 완료된 할 일 개수 다시 조회
+        // 할 일 목록 다시 조회
+        selectTodoList();
+        getTotalCount();
+        getCompleteCount();
+        
+      } else { // 삭제 실패
+        alert("삭제 실패...")
+      }
+    });
+
+});
+
+
 
 selectTodoList();
 getTotalCount();

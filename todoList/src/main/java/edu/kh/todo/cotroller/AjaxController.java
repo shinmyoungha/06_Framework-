@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.kh.todo.model.dto.Todo;
@@ -33,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 * Spring에서 비동기 통신 시
 * - 전달받은 데이터의 자료형
 * - 응답하는 데이터의 자료형
-* 위 두가지를 앎자은 형태로 가공(변환) 해주는 객체
+* 위 두가지를 알맞은 형태로 가공(변환) 해주는 객체
 * 
 * 	  Java					JS
 * 문자열, 숫자 <------------> TEXT
@@ -106,5 +107,17 @@ public class AjaxController {
 		List<Todo> todoList = service.selectList();
 		
 		return todoList;
+		// List(Java 전용 타입)를 반환
+		// -> JS가 인식할 수 없기 때문에 JSON으로 변환 필요!
+		// -> HttpMessageConvertor 가 JSON 형태로 변환하여 반환
+	}
+	
+	// 할 일 상세 조회
+	@ResponseBody       // 비동기 요청을 보낸곳으로 데이터(반환값) 돌려보냄
+	@GetMapping("detail")
+	public Todo selectTodo(@RequestParam("todoNo") int todoNo) {
+		return service.todoDetail(todoNo);
+		// return 자료형 : Todo(DTO)
+		// -> HttpMessageConvertor 가 String(JSON) 형태로 변환해서 반환
 	}
 }
