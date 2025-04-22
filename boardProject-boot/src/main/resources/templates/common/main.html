@@ -57,7 +57,7 @@
     
               <article class="signup-find-area">
 
-                <a href="#">회원가입</a>
+                <a href="/member/signup">회원가입</a>
 
                 <span> | </span>
                 <a href="#">ID/PW 찾기</a>
@@ -87,14 +87,14 @@
                      alt="프로필 이미지" >
               </a>
 
-              <!-- 닉네임, 이메일F, 로그아웃 버튼 영역 -->
+              <!-- 닉네임, 이메일, 로그아웃 버튼 영역 -->
               <div class="my-info" th:object="${session.loginMember}">
                 
                 <div>
                   <a href="#" id="nickname" th:text="*{memberNickname}">닉네임</a>
-                  <a href="#" id="logoutBtn">로그아웃</a>
+                  <a href="/member/logout" id="logoutBtn">로그아웃</a>
                 </div>
-                <p th:text="*{mamberEmail}">이메일</p>
+                <p th:text="*{memberEmail}">이메일</p>
               </div>
 
             </article>

@@ -74,7 +74,6 @@ AND MEMBER_DEL_FL = 'N';
 
 
 
-
 -----------------------------------------
 
 /* 이메일, 인증키 저장 테이블 생성 */
@@ -97,6 +96,10 @@ SELECT * FROM "TB_AUTH_KEY";
 
 COMMIT;
 
+SELECT COUNT(*)
+FROM "MEMBER"
+WHERE MEMBER_EMAIL = #{memberEmail}
+AND MEMBER_DEL_FL = 'N'
 
 ------------------------------------------
 
