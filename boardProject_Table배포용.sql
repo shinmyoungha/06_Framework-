@@ -92,7 +92,7 @@ COMMENT ON COLUMN "TB_AUTH_KEY"."CREATE_TIME" IS '인증 번호 생성 시간';
 CREATE SEQUENCE SEQ_KEY_NO NOCACHE; -- 인증키 구분 번호 시퀀스
 
 
-SELECT * FROM "TB_AUTH_KEY";
+SELECT * FROM "TB_AUTH_KEY"; -- 조회하면 이메일을 몰라도 인증번호 알 수 있음
 
 COMMIT;
 
