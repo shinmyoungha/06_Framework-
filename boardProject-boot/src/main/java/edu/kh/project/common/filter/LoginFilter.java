@@ -20,46 +20,63 @@ import jakarta.servlet.http.HttpSession;
  * 
  * */
 
-// 로그인이 되어있지 않은 경우 특정 페이지로 돌아가게 함
+// 로그인이 되어있지 않은 경우 특정페이지로 돌아가게 함 
 public class LoginFilter implements Filter{
-
+	
+	// 필터 동작을 정의하는 메서드
 	@Override
-	public void doFilter(ServletRequest request,
-						 ServletResponse response, 
-						 FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, 
+						ServletResponse response, 
+						FilterChain chain) throws IOException, ServletException {
 		
 		// ServletRequest : HttpServletRequest 의 부모 타입
 		// ServletResponse : HttpServletResponse 의 부모 타입
 		
-		// seesion 필요함 -> 왜? -> loginMember 가 session 에 담김
+		// Session 필요함 -> 왜? -> loginMember가 session 에 담김
 		
 		// Http 통신이 가능한 형태로 (자식형태) 다운 캐스팅
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		
-		// ******* 계시판 부분 할 때 확인!!! *******
-		// *****************************************
+		// ********* 게시판 부분 할 때 확인!!! **********
+		// 현재 요청의 URI 를 가져옴
+		String path = req.getRequestURI();
+		
+		// 요청 URI가 "/myPage/profile/"로 시작하는지 확인
+		// -> 게시판 등에서 로그인 안해도 프로필 이미지 요청을 보내는 곳이 있는데,
+		// 그때는 필터링 하지 않도록 함.
+		if(path.startsWith("/myPage/profile/")) {
+			// 필터를 통과하도록함
+			chain.doFilter(request, response);
+			return; // 필터 통과 후 아래 코드 수행하지 않도록 return
+		}
+		
+		// **********************************************
 		
 		// Session 객체 얻어오기
 		HttpSession session = req.getSession();
 		
-		// 세션에서 로그인 한 회원 정보를 얻어옴
-		// 얻어왔으나, 없을때 (null) -> 로그인이 되어있지 않은 상태
-		
+		// 세션에서 로그인한 회원 정보를 얻어옴
+		// 얻어왔으나, 없을 때 (null) -> 로그인이 되어있지 않은 상태
 		if( session.getAttribute("loginMember") == null ) {
 			
-			// loninError 재요청
+			// /loginError 재요청
+			// resp를 이용해서 원하는 곳으로 리다이렉트
 			resp.sendRedirect("/loginError");
 			
 		} else {
 			// 로그인이 되어있는 상태
 			
 			// FilterChain
-			// - 다음 필터 또는 DispatcherServlet 과 연결된 객체
+			// - 다음 필터 또는 DispatcherServlet과 연결된 객체
 			
 			// 다음 필터로 요청/응답 객체 전달
-			// 만약에 다음 필터가 없으면 DispatcherServlet 로 요청/응답 객체 전달
+			// 만약에 다음 필터가 없으면 DispatcherServlet로 요청/응답 객체 전달
 			chain.doFilter(request, response);
 		}
+		
+		
 	}
+	
+	
 }

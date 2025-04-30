@@ -50,11 +50,12 @@ public interface MyPageService {
 	 */
 	List<UploadFile> fileList(int memberNo);
 
-	/** 여러 파일 업로드 서비스
+	/** 여러파일 업로드 서비스
 	 * @param aaaList
 	 * @param bbbList
 	 * @param memberNo
 	 * @return
+	 * @throws Exception
 	 */
 	int fileUpload3(List<MultipartFile> aaaList, 
 					List<MultipartFile> bbbList, 

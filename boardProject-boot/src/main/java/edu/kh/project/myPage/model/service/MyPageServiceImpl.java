@@ -30,13 +30,13 @@ public class MyPageServiceImpl implements MyPageService{
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 	
-	@Value("${my.profile.web-path}") 
-	private String profileWebPath; //    /myPage/profile/
+	@Value("${my.profile.web-path}")
+	private String profileWebPath; //   /myPage/profile/
 	
 	@Value("${my.profile.folder-path}")
-	private String profileFolderPath; //    C:/uploadFiles/profile/
+	private String profileFolderPath; //   C:/uploadFiles/profile/
 	
-	
+
 	@Override
  	public int updateInfo(Member inputMember, String[] memberAddress) {
 		
@@ -189,7 +189,9 @@ public class MyPageServiceImpl implements MyPageService{
 		// 파일을 서버 컴퓨터에 저장!
 		uploadFile.transferTo(new File(folderPath+fileRename));
 			// C:/uploadFiles/test/20250424150830_00001.jpg
-				
+		
+		
+		
 		return result;
 	}
 	
@@ -198,19 +200,19 @@ public class MyPageServiceImpl implements MyPageService{
 	public List<UploadFile> fileList(int memberNo) {
 		return mapper.fileList(memberNo);
 	}
-
+	
 	// 여러 파일 업로드 서비스
 	@Override
 	public int fileUpload3(List<MultipartFile> aaaList, 
-						   List<MultipartFile> bbbList, 
-						   int memberNo) throws Exception {
+							List<MultipartFile> bbbList, 
+							int memberNo) throws Exception {
 		
-		// 1. addList 처리
+		// 1. aaaList 처리
 		int result1 = 0; // 결과(INSERT된 행의 갯수)를 저장할 변수
 		
 		// 업로드된 파일이 없을 경우를 제외하고 업로드
 		for(MultipartFile file : aaaList) {
-		
+			
 			if(file.isEmpty()) { // 파일이 없으면 다음 파일
 				continue;
 			}
@@ -225,11 +227,11 @@ public class MyPageServiceImpl implements MyPageService{
 		
 		// 업로드된 파일이 없을 경우를 제외하고 업로드
 		for(MultipartFile file : bbbList) {
-				
+			
 			if(file.isEmpty()) { // 파일이 없으면 다음 파일
 				continue;
 			}
-					
+			
 			// DB에 저장 + 서버 실제로 저장
 			// fileUpload2() 메서드를 호출(재활용)
 			result2 += fileUpload2(file, memberNo);
@@ -237,12 +239,12 @@ public class MyPageServiceImpl implements MyPageService{
 		
 		return result1 + result2;
 	}
-
+	
 	// 프로필 이미지 변경 서비스
 	@Override
 	public int profile(MultipartFile profileImg, Member loginMember) throws Exception {
 		
-		// 프로필 이미지 경로
+		// 프로필 이미지 경로 
 		String updatePath = null;
 		
 		// 변경명 저장
@@ -260,12 +262,13 @@ public class MyPageServiceImpl implements MyPageService{
 		
 		// 수정된 프로필 이미지 경로 + 회원 번호를 저장할 DTO 객체
 		Member member = Member.builder()
-							  .memberNo(loginMember.getMemberNo())
-							  .build();
+						.memberNo(loginMember.getMemberNo())
+						.profileImg(updatePath)
+						.build();
 		
 		int result = mapper.profile(member);
 		
-		if(result > 0) {
+		if(result > 0) { 
 			
 			// 프로필 이미지를 없애는 update 를 한 경우를 제외
 			// -> 업로드한 이미지가 있을 경우
@@ -279,9 +282,15 @@ public class MyPageServiceImpl implements MyPageService{
 			// DB와 동기화
 			loginMember.setProfileImg(updatePath);
 			
+			
 		}
 		
 		return result;
-	}	
+	}
+	
+	
+	
+	
+	
 	
 }

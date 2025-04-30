@@ -15,7 +15,7 @@ public class MainController {
 		// 경로 :   src/main/resources(classpath:)/templates/common/main.html
 		// 접두사 : src/main/resources(classpath:)/templates/  
 		// 접미사 : .html
-		return "common/main"; // 접두사와 접미사를 뺴고 써야함
+		return "common/main";
 	}
 	
 	// LoginFilter -> 로그인 안되어있을때 loginError 리다이렉트
@@ -25,4 +25,9 @@ public class MainController {
 		ra.addFlashAttribute("message", "로그인 후 이용해주세요.");
 		return "redirect:/";
 	}
+	
+	
+	
+	
+	
 }

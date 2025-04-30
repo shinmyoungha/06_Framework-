@@ -18,6 +18,7 @@
 
 		<th:block th:replace="~{common/header}"></th:block>
 
+
 		<section class="board-list">
 
 			<th:block th:each="boardType : ${application.boardTypeList}">
@@ -88,7 +89,7 @@
 								<td th:text="*{boardWriteDate}">2023-10-26</td>
 	
 								<!-- 조회수 -->
-								<td th:text="*{readCount}">0</td>
+									<td th:text="*{readCount}">0</td>
 	
 								<!-- 좋아요 수 -->
 								<td th:text="*{likeCount}">0</td>
@@ -99,6 +100,8 @@
 					</tbody>
 				</table>
 			</div>
+
+
 
 			<div class="btn-area">
 				<!-- 로그인 상태일 때만 글쓰기 버튼 노출 -->
@@ -184,6 +187,8 @@
 				</ul>
 			</div>
 
+
+
 			<!-- 검색창 -->
 			<!-- 현재 : /board/1 
 				목표 : /board/1?key=w&query=짱구
@@ -204,6 +209,7 @@
 
 		</section>
 	</main>
+
 
 	<th:block th:replace="~{common/footer}"></th:block>
 	
