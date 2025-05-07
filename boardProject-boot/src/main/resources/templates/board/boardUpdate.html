@@ -26,9 +26,6 @@
                         th:value="${board.boardTitle}">   
             </h1>
 
-
-
-
             <!-- 썸네일 영역 -->
             <h5>썸네일</h5>
             <div class="img-box">
@@ -40,7 +37,6 @@
                     <span class="delete-image">&times;</span>
                 </div>
             </div>
-
 
             <!-- 업로드 이미지 영역 -->
             <h5>업로드 이미지</h5>
@@ -85,13 +81,11 @@
                         th:text="*{boardContent}">게시글 내용</textarea>
             </div>
 
-
             <!-- 버튼 영역 -->
             <div class="board-btn-area">
                 <button type="submit" id="writebtn">등록</button>
             </div>
 
-            
             <!-- 수정 성공 시 주소(쿼리스트링) 유지용도 -->
             <input type="hidden" name="cp" th:value="${param.cp}">
        
@@ -102,7 +96,6 @@
     <th:block th:replace="~{common/footer}"></th:block>
 
     <script th:src="@{/js/board/boardUpdate.js}"></script>
-
 
     <!-- 이미지 미리보기 설정 -->
     <script th:inline="javascript">

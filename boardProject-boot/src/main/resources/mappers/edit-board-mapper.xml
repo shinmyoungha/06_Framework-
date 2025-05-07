@@ -3,11 +3,23 @@
 <mapper
 	namespace="edu.kh.project.board.model.mapper.EditBoardMapper">
 
-	<!-- useGeneratedKeys 속성 : DB 내부적으로 생성한 키 (시퀸스)를 전달된 파라미터의 필드로 대입 가능 여부 
-		지정 ** 동적 SQL ** - 프로그램 수행 중 SQL을 변경하는 기능 (마이바티스의 가장 강력한 기능!) <selectKey> 
-		태그 : INSERT/UPDATE 시 사용할 키(시퀸스)를 조회해서 파라미터의 지정된 필드에 대입 order 속성 : 메인 SQL이 
-		수행되기 전/후에 selectKey 가 수행되도록 지정 전 : BEFORE 후 : AFTER keyProperty 속성 : selectKey 
-		조회 결과를 저장할 파라미터의 필드명 -->
+	<!-- 
+		useGeneratedKeys 속성 : DB 내부적으로 생성한 키(시퀀스)를
+							전달된 파라미터의 필드로 대입 가능 여부 지정
+							
+		** 동적 SQL **
+		- 프로그램 수행 중 SQL을 변경하는기능 (마이바티스의 가장 강력한 기능!)
+		
+		<selectKey> 태그 : INSERT/UPDATE 시 사용할 키(시퀀스)를
+						조회해서 파라미터의 지정된 필드에 대입
+							
+		order 속성 : 메인 SQL이 수행되기 전/후에 selectKey가 수행되도록 지정
+		전 : BEFORE
+		후 : AFTER
+		
+		keyProperty 속성 : selectKey 조회 결과를 저장할 파라미터의 필드명
+	
+	 -->
 	<insert id="boardInsert" useGeneratedKeys="true"
 		parameterType="Board">
 
@@ -25,10 +37,22 @@
 		#{memberNo})
 	</insert>
 
-	<!-- 동적 SQL 중 <foreach> -Mybatis 에서 제동하는 향상된 for문 - 특정 sql 구문을 반복할때 사용 - 
-		반복 사이에 구분자(separator)를 추가할 수 있음 [지원하는 속성] collection : 반복할 객체의 타입 작성(list, 
-		set..) item : collection 에서 순차적으로 꺼낸 하나의 요소를 저장하는 변수 index : 현재 반복 접근중인 인덱스(0,1,2,3..) 
-		open : 반복전에 출력할 sql close : 반복 종료 후에 출력할 sql separator : 반복 사이사이 구분자 -->
+	<!-- 
+		동적 SQL 중 <foreach> 
+		- MyBatis에서 제공하는 향상된 for 문
+		
+		- 특정 sql 구문을 반복할 때 사용
+		
+		- 반복 사이에 구분자(separator)를 추가할 수 있음
+		
+		[지원하는 속성]
+		collection : 반복할 객체의 타입 작성(list, set..)
+		item : collection에서 순차적으로 꺼낸 하나의 요소를 저장하는 변수
+		index : 현재 반복 접근중인 인덱스 (0,1,2,3..)
+		open : 반복전에 출력할 sql
+		close : 반복종료 후에 출력할 sql
+		separator : 반복 사이사이 구분자
+	 -->
 	<insert id="insertUploadList">
 		INSERT INTO "BOARD_IMG"
 		<foreach collection="list" item="img" open="(" close=")"
@@ -41,5 +65,42 @@
 			#{img.boardNo}
 			FROM DUAL
 		</foreach>
+	</insert>
+	
+	<!-- 게시글 부분 수정 -->
+	<update id="boardUpdate">
+		UPDATE "BOARD" SET
+		BOARD_TITLE = #{boardTitle},
+		BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_CODE = #{boardCode}
+		AND BOARD_NO = #{boardNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 게시글 이미지 삭제 -->
+	<delete id="deleteImage">
+		DELETE FROM "BOARD_IMG"
+		WHERE BOARD_NO = #{boardNo}
+		AND IMG_ORDER IN(${deleteOrderList})
+	</delete>
+	
+	<!-- 게시글 이미지 1행 수정 -->
+	<update id="updateImage">
+		UPDATE "BOARD_IMG" SET
+		IMG_ORIGINAL_NAME = #{imgOriginalName},
+		IMG_RENAME = #{imgRename}
+		WHERE BOARD_NO = #{boardNo}	
+		AND IMG_ORDER = #{imgOrder}
+	</update>
+	
+	<!-- 게시글 이미지 1행 삽입 -->
+	<insert id="insertImage">
+		INSERT INTO "BOARD_IMG"
+		VALUES(NEXT_IMG_NO(),
+			   #{imgPath},
+			   #{imgOriginalName},
+			   #{imgRename},
+			   #{imgOrder},
+			   #{boardNo})
 	</insert>
 </mapper>

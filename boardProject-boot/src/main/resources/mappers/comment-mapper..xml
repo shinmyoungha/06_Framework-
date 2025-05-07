@@ -60,6 +60,7 @@
 		COMMENT_CONTENT = #{commentContent}
 		WHERE COMMENT_NO = #{commentNo}
 	</update>
+	
 </mapper>
 
 
