@@ -209,12 +209,19 @@ public class EditBoardServiceImpl implements EditBoardService {
 			return result;
 		}
 		
+		
 		// 수정, 새로 삽입한 이미지 파일을 서버에 실제로 저장!
 		for(BoardImg img : uploadList) {
 			img.getUploadFile().transferTo(new File(folderPath + img.getImgRename()));
 		}
 		
 		return result;
+	}
+
+	// 게시글 삭제
+	@Override
+	public int boardDelete(Map<String, Integer> map) {
+		return mapper.boardDelete(map);
 	}
 
 }
