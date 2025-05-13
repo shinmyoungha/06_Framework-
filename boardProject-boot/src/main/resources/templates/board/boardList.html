@@ -193,7 +193,8 @@
 			<!-- 현재 : /board/1 
 				목표 : /board/1?key=w&query=짱구
 			-->
-			<form th:action="@{{boardCode}(boardCode=${boardCode})}" method="get" id="boardSearch">
+			<form th:action="@{{boardCode}(boardCode=${boardCode})}" 
+												method="get" id="boardSearch">
 
 				<select name="key" id="searchKey">
 					<option value="t">제목</option>
