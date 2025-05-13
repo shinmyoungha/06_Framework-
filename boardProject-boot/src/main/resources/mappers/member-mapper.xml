@@ -10,7 +10,7 @@
 	TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"') ENROLL_DATE
 	FROM "MEMBER"
 	WHERE MEMBER_EMAIL = #{memberEmail}
-	AND MEMBER_DEL_FL = 'N'
+	AND MEMBER_DEL_FL = 'N';
    </select>
    
    <!-- 이메일 중복 검사 -->

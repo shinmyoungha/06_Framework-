@@ -30,8 +30,8 @@ public class ImgDeletescheduling {
 	@Value("${my.board.folder-path}")
 	private String boardFolderPath; // C:/uploadFiles/board/
 	
-	 @Scheduled(cron = "0,30 * * * * *")
-//	@Scheduled(cron = "0 0 0 1 * *") // 매달 1일
+//	 @Scheduled(cron = "0,30 * * * * *")
+	@Scheduled(cron = "0 0 0 1 * *") // 매달 1일
 	public void scheduling( ) {
 		log.info("스케줄러 동작!");
 		
