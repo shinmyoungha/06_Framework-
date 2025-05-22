@@ -42,9 +42,11 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	
-   // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop
-   implementation 'org.springframework.boot:spring-boot-starter-aop'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()

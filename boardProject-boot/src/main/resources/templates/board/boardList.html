@@ -89,7 +89,7 @@
 								<td th:text="*{boardWriteDate}">2023-10-26</td>
 	
 								<!-- 조회수 -->
-									<td th:text="*{readCount}">0</td>
+								<td th:text="*{readCount}">0</td>
 	
 								<!-- 좋아요 수 -->
 								<td th:text="*{likeCount}">0</td>
@@ -190,7 +190,8 @@
 
 
 			<!-- 검색창 -->
-			<!-- 현재 : /board/1 
+			<!-- 
+				현재 : /board/1 
 				목표 : /board/1?key=w&query=짱구
 			-->
 			<form th:action="@{{boardCode}(boardCode=${boardCode})}" 

@@ -1,5 +1,4 @@
 /* 선택된 이미지 미리보기 관련 요소 모두 얻어오기 */
-
 const previewList = document.querySelectorAll(".preview"); // img 태그 5개
 const inputImageList = document.querySelectorAll(".inputImage"); // input 태그 5개
 const deleteImageList = document.querySelectorAll(".delete-image"); // x버튼 5개

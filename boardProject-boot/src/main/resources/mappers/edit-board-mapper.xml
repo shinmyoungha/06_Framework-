@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper
-	namespace="edu.kh.project.board.model.mapper.EditBoardMapper">
-
+<mapper namespace="edu.kh.project.board.model.mapper.EditBoardMapper">
+	
 	<!-- 
 		useGeneratedKeys 속성 : DB 내부적으로 생성한 키(시퀀스)를
 							전달된 파라미터의 필드로 대입 가능 여부 지정
@@ -20,26 +19,26 @@
 		keyProperty 속성 : selectKey 조회 결과를 저장할 파라미터의 필드명
 	
 	 -->
-	<insert id="boardInsert" useGeneratedKeys="true"
-		parameterType="Board">
 
-		<selectKey order="BEFORE" resultType="_int"
-			keyProperty="boardNo">
+	<insert id="boardInsert" useGeneratedKeys="true" 
+	parameterType="Board">
+		
+		<selectKey order="BEFORE" resultType="_int" keyProperty="boardNo">
 			SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
 		</selectKey>
-
+		
 		INSERT INTO "BOARD"
-		VALUES(#{boardNo},
-		#{boardTitle},
-		#{boardContent},
-		DEFAULT, DEFAULT, DEFAULT, DEFAULT,
-		#{boardCode},
-		#{memberNo})
+		VALUES(#{boardNo}, 
+				#{boardTitle},
+				#{boardContent},
+				DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+				#{boardCode},
+				#{memberNo})
 	</insert>
-
+	
 	<!-- 
 		동적 SQL 중 <foreach> 
-		- MyBatis에서 제공하는 향상된 for 문
+		- Mybatis에서 제공하는 향상된 for문
 		
 		- 특정 sql 구문을 반복할 때 사용
 		
@@ -53,19 +52,22 @@
 		close : 반복종료 후에 출력할 sql
 		separator : 반복 사이사이 구분자
 	 -->
+	
 	<insert id="insertUploadList">
 		INSERT INTO "BOARD_IMG"
-		<foreach collection="list" item="img" open="(" close=")"
-			separator=" UNION ">
+		
+		<foreach collection="list" item="img" 
+		open="(" close=")" separator=" UNION ">
 			SELECT NEXT_IMG_NO(), 
-			#{img.imgPath},
-			#{img.imgOriginalName},
-			#{img.imgRename},
-			#{img.imgOrder},
-			#{img.boardNo}
+			#{img.imgPath}, 
+			#{img.imgOriginalName}, 
+			#{img.imgRename}, 
+			#{img.imgOrder}, 
+			#{img.boardNo} 
 			FROM DUAL
 		</foreach>
 	</insert>
+	
 	
 	<!-- 게시글 부분 수정 -->
 	<update id="boardUpdate">
@@ -89,7 +91,7 @@
 		UPDATE "BOARD_IMG" SET
 		IMG_ORIGINAL_NAME = #{imgOriginalName},
 		IMG_RENAME = #{imgRename}
-		WHERE BOARD_NO = #{boardNo}	
+		WHERE BOARD_NO = #{boardNo}
 		AND IMG_ORDER = #{imgOrder}
 	</update>
 	
@@ -97,12 +99,13 @@
 	<insert id="insertImage">
 		INSERT INTO "BOARD_IMG"
 		VALUES(NEXT_IMG_NO(),
-			   #{imgPath},
-			   #{imgOriginalName},
-			   #{imgRename},
-			   #{imgOrder},
-			   #{boardNo})
+				#{imgPath},
+				#{imgOriginalName},
+				#{imgRename},
+				#{imgOrder},
+				#{boardNo})
 	</insert>
+	
 	
 	<!-- 게시글 삭제 -->
 	<update id="boardDelete">
@@ -114,5 +117,10 @@
 	</update>
 	
 	
-	
 </mapper>
+
+
+
+
+
+

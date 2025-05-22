@@ -101,7 +101,6 @@ public class MemberServiceImpl implements MemberService{
 			inputMember.setMemberAddress(null); // null 로 저장
 		}
 		
-		
 		// 비밀번호 암호화 진행
 		
 		// inputMember 안의 memberPw -> 평문
@@ -113,7 +112,5 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.signup(inputMember);
 		
 	}
-	
-	
-	
+
 }

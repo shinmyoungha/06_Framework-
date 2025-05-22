@@ -23,7 +23,7 @@ public interface EditBoardMapper {
 	 */
 	int insertUploadList(List<BoardImg> uploadList);
 
-	/** 게시글 부분(제목/ 내용) 수정
+	/** 게시글 부분(제목/내용) 수정
 	 * @param inputBoard
 	 * @return
 	 */
@@ -53,4 +53,15 @@ public interface EditBoardMapper {
 	 */
 	int boardDelete(Map<String, Integer> map);
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
