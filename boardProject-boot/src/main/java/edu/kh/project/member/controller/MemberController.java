@@ -1,4 +1,4 @@
-package edu.kh.project.member.controller;
+ package edu.kh.project.member.controller;
 
 import java.sql.Array;
 
@@ -49,8 +49,11 @@ public class MemberController {
 	 * @return
 	 */
 	@PostMapping("login")
-	public String login(Member inputMember, RedirectAttributes ra, Model model,
-			@RequestParam(value = "saveId", required = false) String saveId, HttpServletResponse resp) {
+	public String login(Member inputMember, 
+						RedirectAttributes ra, 
+						Model model,
+						@RequestParam(value = "saveId", required = false) String saveId, 
+						HttpServletResponse resp) {
 
 		// 체크박스
 		// - 체크가 된 경우 : "on"
