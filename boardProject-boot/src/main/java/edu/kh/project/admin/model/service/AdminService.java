@@ -55,4 +55,16 @@ public interface AdminService {
 	 */
 	int restoreBoard(int boardNo);
 
+	/** 관리자 이메일 중복 여부 검사
+	 * @param memberEmail
+	 * @return
+	 */
+	int checkEmail(String memberEmail);
+
+	/** 관리자 계정 발급
+	 * @param member
+	 * @return
+	 */
+	String createAdminAccount(Member member);
+
 }
