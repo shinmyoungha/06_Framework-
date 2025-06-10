@@ -63,5 +63,7 @@ public interface TodoService {
 	 */
 	List<Todo> selectList();
 
+	Todo getLatestTodo();
+
 	
 }

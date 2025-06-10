@@ -100,4 +100,9 @@ public class TodoServiceImpl implements TodoService {
 		return mapper.selectAll();
 	}
 
+	@Override
+	public Todo getLatestTodo() {
+		return mapper.getLatestTodo();
+	}
+
 }

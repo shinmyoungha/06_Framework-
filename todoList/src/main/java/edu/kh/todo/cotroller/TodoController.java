@@ -3,6 +3,7 @@ package edu.kh.todo.cotroller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,37 +16,37 @@ import edu.kh.todo.model.service.TodoService;
 
 @Controller
 @RequestMapping("todo") //  "/todo" 로 시작하는 모든 요청 매핑
+@CrossOrigin(origins = "http://localhost:5173" /* , allowCredentials = "true" */) // 원래 5173이였는데 리액트 주소가 5174여서 바꿈
 public class TodoController {
 
 	@Autowired // 의존성 주입(같은 타입 + 상속관계인 Bean 을 의존성 주입:DI)
 	private TodoService service;
 	
-	@PostMapping("add") //  /todo/add 로 Post 방식 요청 매핑
-	public String addTodo(@RequestParam("todoTitle") String todoTitle,
-						  @RequestParam("todoContent") String todoContent,
-						  RedirectAttributes ra) {
-		
-		// RedirectAttributes : 리다이렉트 시 값을 1회성으로 전달하는 객체
-		// RedirectAttributes.addFlashAttribute("key"m value) 형식으로 세팅.
-		// -> request scope -> session scope 로 잠시 변환
-		
-		// 응답 전 : request scope
-		// redirect : session scope 로 이동 -> 사용
-		// 응답까지 끝나고 난 후 : request scope 복귀
-		
-		// 서비스 매서드 호출 후 결과 받기
-		int result = service.addTodo(todoTitle, todoContent);	
-		
-		// 결과에 따라 message 값 지정
-		String message = null;
-		
-		if(result > 0) message = "할 일 추가 성공!!!";
-		else           message = "할 일 추가 실패...";
-		
-		// 리다이렉트 후 1회성으로 사용할 데이터를 속성으로 추가(req -> session -> req)
-		ra.addFlashAttribute("message", message);
+	@PostMapping("add")
+	@ResponseBody
+	public Map<String, Object> addTodo(
+	    @RequestParam("todoTitle") String todoTitle,
+	    @RequestParam("todoContent") String todoContent) {
 
-		return "redirect:/"; // 메인페이지로 재요청
+	    Map<String, Object> response = new HashMap<>();
+
+	    try {
+	        int result = service.addTodo(todoTitle, todoContent);
+	        if (result > 0) {
+	            Todo todo = service.getLatestTodo(); // 최근 추가된 Todo 조회
+	            response.put("status", "success");
+	            response.put("message", "할 일 추가 성공!!!");
+	            response.put("data", todo);
+	        } else {
+	            response.put("status", "error");
+	            response.put("message", "할 일 추가 실패...");
+	        }
+	    } catch (Exception e) {
+	        response.put("status", "error");
+	        response.put("message", "서버 오류: " + e.getMessage());
+	    }
+
+	    return response;
 	}
 	
 	// /todo/detail?todoNo=1
